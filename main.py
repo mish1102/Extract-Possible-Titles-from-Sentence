@@ -128,7 +128,31 @@ def heTitles(tranlated_text):
 
 def countOccurences(str, word):
 	wordslist = list(str) #.split(' '))
+	# print(wordslist)
 	return wordslist.count(word)
+
+def getkeywordwithoutMerge(sentences):
+	nlp = spacy.load("en_core_web_sm")
+	doc = nlp(sentences)
+	#noun with root
+	final = [(i.text) for i in doc if (i.pos_ =='NOUN' or i.pos_ == 'PROPN') and i.dep_ == 'ROOT']
+	if final == []:
+		final = [(i.text) for i in doc if (i.pos_ == 'NOUN' or i.pos_ == 'PROPN')]
+		if final == []:
+			final = [(i.text) for i in doc if i.dep_ == 'ROOT']
+			final1 = final[0]
+			isRoot = True
+			isLastNoun = False
+		else:
+			final1 = final[-1]
+			isRoot = False
+			isLastNoun = True
+	else:
+		final1 = final[0]
+		isRoot = True
+		isLastNoun = False
+	data = [{"keyword" : final1 , "isRoot" : isRoot, "isLastNoun" : isLastNoun}]
+	return data
 
 @app.route('/getTitles/', methods=['post', 'get'])
 def getTitle():
@@ -159,9 +183,15 @@ def getTitle():
 						message = heTitles(tranlated_text)
 						message1 = sorted(message, key=lambda k: k['titleCount'], reverse=True)
 				else:
-					dashOccurence = countOccurences(str(textualinfo), '–') or countOccurences(str(textualinfo), '-')
-					if dashOccurence == 1:
-						textualInfo1 = textualinfo.split('-')[0]
+					dashOccurence1 = countOccurences(str(textualinfo), '–')
+					dashOccurence2 = countOccurences(str(textualinfo), '-')
+					indexOfDash1 = textualinfo.index('–') if '–' in textualinfo else 99
+					indexOfDash2 = textualinfo.index('-') if '-' in textualinfo else 99
+					if dashOccurence1 == 1 or dashOccurence2 == 1:
+						if indexOfDash1 < indexOfDash2:
+							textualInfo1 = textualinfo.split('–')[0]
+						else:
+							textualInfo1 = textualinfo.split('-')[0]
 						countChars = len(textualInfo1.strip().split(" "))
 						if countChars <= 3:
 							titleNew = textualInfo1
@@ -184,12 +214,15 @@ def getTitle():
 							message = heTitles(tranlated_text)
 							message1 = sorted(message, key=lambda k: k['titleCount'], reverse=True)
 			else:
-				dashOccurence = countOccurences(str(textualinfo), '–') or countOccurences(str(textualinfo), '-')
-				if dashOccurence == 1:
-					if '-' in textualinfo:
-						textualInfo1 = textualinfo.split('-')[0]
-					elif '–' in textualinfo:
+				dashOccurence1 = countOccurences(str(textualinfo), '–')
+				dashOccurence2 = countOccurences(str(textualinfo), '-')
+				indexOfDash1 = textualinfo.index('–') if '–' in textualinfo else 99
+				indexOfDash2 = textualinfo.index('-') if '-' in textualinfo else 99
+				if dashOccurence1 == 1 or dashOccurence2 == 1:
+					if indexOfDash1 < indexOfDash2:
 						textualInfo1 = textualinfo.split('–')[0]
+					else:
+						textualInfo1 = textualinfo.split('-')[0]
 					countChars = len(textualInfo1.strip().split(" "))
 					if countChars <=3:
 						titleNew = textualInfo1
@@ -211,8 +244,13 @@ def getTitle():
 						message = heTitles(tranlated_text)
 						message1 = sorted(message, key=lambda k: k['titleCount'], reverse=True)
 
-			data_to_return =  {"original_sentence": textualinfo, "details" : message1}
+			translatedText = message1[0]['translated_text']
+			keywordDetails = getkeywordwithoutMerge(translatedText)
+
+			data_to_return =  {"original_sentence": textualinfo, "details" : message1 , "keyword": keywordDetails}
 	return json.dumps(data_to_return)
+
+
 
 if __name__ == '__main__':
 	app.run(debug=True)
