@@ -1,6 +1,6 @@
 # Extract-Possible-Titles-from-Sentence
 
-Work on this repository is continuning.. 
+Work on this repository is Ongoing.. 
 
 Updates will be mentioned! 
 
