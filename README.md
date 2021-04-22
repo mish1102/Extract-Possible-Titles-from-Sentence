@@ -17,7 +17,6 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -61,13 +60,6 @@ Install all the necessary packages and libraries through
 3. Run the requirements.txt file to download all the necessary libraries and packages using pip3 install -r requirements.txt
 4. Run the main file using python3 main.py
 5. Open the Postman to check the responses. Place {"text":"sentence xyz"} in your Raw-> Json input. Also mention {localhost}/getTitles/ as the request URL. Hit Send. 
-
-<!-- USAGE EXAMPLES -->
-## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 <!-- CONTRIBUTING -->
 ## Contributing
