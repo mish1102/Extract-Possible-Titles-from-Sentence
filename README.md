@@ -1,7 +1,5 @@
 # Extract-Possible-Titles-from-Sentence
 
-The repository aimed at providing user a functionality of extracting the possible titles from the mentioned sentence. 
-
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -31,13 +29,14 @@ The repository aimed at providing user a functionality of extracting the possibl
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
+  The repository aimed at providing user a functionality of extracting the possible titles from the mentioned sentence. 
 
 ### Built With
 
 Here are the major frameworks that were used to build this project. 
-* [Python]
-* [Spacy]
-* [Flask]
+* Python
+* Spacy
+* Flask
 
 
 <!-- GETTING STARTED -->
