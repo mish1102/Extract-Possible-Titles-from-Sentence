@@ -29,7 +29,9 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-  The repository aimed at providing user a functionality of extracting the possible titles from the mentioned sentence. 
+  The repository aimed at providing user a functionality of extracting the possible titles from the mentioned sentence. Currently the update is supporting two languages : Hebrew and English. 
+  
+  In near future, it will be made available for different langauges. 
 
 ### Built With
 
